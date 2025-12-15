@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 2048
+  name: g2048
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: 2048
+      app: g2048
   template:
     metadata:
       labels:
-        app: 2048
+        app: g2048
     spec:
       containers:
-      - name: 2048
+      - name: g2048
         image: tejubagalad/2048:latest	
         ports:
         - containerPort: 80
@@ -24,7 +24,7 @@ metadata:
   name: 2048-service
 spec:
   selector:
-    app: 2048
+    app: g2048
   type: NodePort
   ports:
     - port: 80

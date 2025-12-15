@@ -46,7 +46,7 @@ jobs:
           context: ./microservice-arch/gamehub-microarch/TwentyFortyEight
           file: ./microservice-arch/gamehub-microarch/TwentyFortyEight/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/2048:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/g2048:latest
 
 
 
@@ -94,4 +94,4 @@ jobs:
         run: |
           echo "🎮 PlayHive Hub: $(minikube service gameapp-service --url)"
           echo "🐍 Snake Game: $(minikube service snake-service --url)"
-          echo "🧩 2048 Game: $(minikube service 2048-service --url)"
+          echo "🧩 2048 Game: $(minikube service g2048-service --url)"
