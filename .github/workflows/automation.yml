@@ -38,7 +38,7 @@ jobs:
           context: ./microservice-arch/gamehub-microarch/SnakeGame
           file: ./microservice-arch/gamehub-microarch/SnakeGame/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/snake:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/snake-game:latest
 
       - name: Build & Push 2048 Image
         uses: docker/build-push-action@v4
