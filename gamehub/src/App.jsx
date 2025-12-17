@@ -3,6 +3,7 @@ import TwentyFortyEight from './TwentyFortyEight'; // Import the 2048 Game
 import SnakeGame from './SnakeGame'; // Assuming you have SnakeGame component
 
 const App = () => {
+throw new Error("error") 
 
   const [selectedGame, setSelectedGame] = useState(null);
 

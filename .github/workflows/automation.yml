@@ -30,7 +30,7 @@ jobs:
           context: ./microservice-arch/gamehub-microarch/app
           file: ./microservice-arch/gamehub-microarch/app/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/gameapp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/gamehub:latest
 
       - name: Build & Push Snake Image
         uses: docker/build-push-action@v4
@@ -38,7 +38,7 @@ jobs:
           context: ./microservice-arch/gamehub-microarch/SnakeGame
           file: ./microservice-arch/gamehub-microarch/SnakeGame/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/snake-game:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/snake:latest
 
       - name: Build & Push 2048 Image
         uses: docker/build-push-action@v4
@@ -65,9 +65,9 @@ jobs:
           
       - name: Pull Latest Images from Docker Hub
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/gameapp:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/gamehub:latest
           docker pull ${{ secrets.DOCKER_USERNAME }}/snake:latest
-          docker pull ${{ secrets.DOCKER_USERNAME }}/2048:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/g2048:latest
 
         
       - name: Enable Ingress Controller
@@ -83,15 +83,14 @@ jobs:
         run: |
           kubectl apply -f microservice-arch/yml/
           kubectl get pods -o wide
+          
       - name: wait-job
         run: sleep 120s
         shell: bash
 
-      - name: Wait for Deployments
-        run: sleep 90s
-
-      - name: Show Service URLs
+      - name: Show Ingress URLs (CORRECT WAY)
         run: |
-          echo "🎮 PlayHive Hub: $(minikube service gameapp-service --url)"
-          echo "🐍 Snake Game: $(minikube service snake-service --url)"
-          echo "🧩 2048 Game: $(minikube service g2048-service --url)"
+          echo "🚀 Application URLs (via Ingress):"
+          echo "🐍 Snake     → http://snake.gamehub.local"
+          echo "🎮 GameHub      → http://gamehub.local"
+          echo "🧩 2048      → http://g2048.gamehub.local"
