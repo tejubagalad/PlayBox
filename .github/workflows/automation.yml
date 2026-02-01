@@ -78,10 +78,19 @@ jobs:
             --selector=app.kubernetes.io/component=controller \
             --timeout=180s
 
+      - name: Enable Metrics Server (for HPA)
+        run: |
+          minikube addons enable metrics-server
+          kubectl wait -n kube-system \
+            --for=condition=ready pod \
+            --selector=k8s-app=metrics-server \
+            --timeout=180s
+
 
       - name: Deploy All Microservices
         run: |
           kubectl apply -f microservice-arch/yml/
+          kubectl get hpa
           kubectl get pods -o wide
           
       - name: wait-job

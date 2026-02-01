@@ -6,5 +6,6 @@ RUN npm install && npm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY public/env.js /usr/share/nginx/html/env.jsz
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD sh -c "sed -i \"s/__POD_NAME__/$POD_NAME/g\" /usr/share/nginx/html/env.js && nginx -g 'daemon off;'"

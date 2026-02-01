@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+const POD_NAME = window._env_?.POD_NAME || "unknown";
+
 
 const App = () => {
   const [selectedGame, setSelectedGame] = useState(null);
@@ -50,7 +52,10 @@ const App = () => {
       >
         {!selectedGame ? (
           <>
-            <h1 style={{ marginBottom: '20px' }}>Welcome to the Game Hub!</h1>
+            <h1 style={{ marginBottom: '10px' }}>Welcome to the Game Hub!</h1>
+	    <p style={{ marginBottom: '20px', color: '#bbbbbb' }}>
+            Running on Pod: <b>{POD_NAME}</b>
+	    </p>
             <div>
               <button
                 onClick={() => redirectToGame('2048')} // Navigate to 2048 game
@@ -119,5 +124,7 @@ const App = () => {
     </div>
   );
 };
+
+
 
 export default App;

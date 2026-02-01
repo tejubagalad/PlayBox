@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gamehub
 spec:
-  replicas: 1
+  replicas: 1           # 🔹 CHANGE 1: multiple replicas
   selector:
     matchLabels:
       app: gamehub
@@ -16,7 +16,18 @@ spec:
       - name: gamehub
         image: tejubagalad/gamehub:latest
         ports:
-        - containerPort: 80
+        - containerPort: 80	
+        env:               # 🔹 CHANGE 2: inject Pod name
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
+              
 ---
 apiVersion: v1
 kind: Service
@@ -28,3 +39,5 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+  type: NodePort          # 🔹 REQUIRED for Minikube access
+
