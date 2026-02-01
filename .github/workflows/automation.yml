@@ -70,31 +70,24 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/g2048:latest
 
         
-      - name: Enable Ingress Controller
+      - name: Check Ingress Controller
         run: |
-          minikube addons enable ingress
-          kubectl wait --namespace ingress-nginx \
-            --for=condition=ready pod \
-            --selector=app.kubernetes.io/component=controller \
-            --timeout=180s
+          kubectl get pods -n ingress-nginx
 
-      - name: Enable Metrics Server (for HPA)
+      - name: Check Metrics Server
         run: |
-          minikube addons enable metrics-server
-          kubectl wait -n kube-system \
-            --for=condition=ready pod \
-            --selector=k8s-app=metrics-server \
-            --timeout=180s
+          kubectl get pods -n kube-system | grep metrics
+
 
 
       - name: Deploy All Microservices
         run: |
-          kubectl apply -f microservice-arch/yml/
+          kubectl apply -f microservice-arch/yml/ 	
           kubectl get hpa
           kubectl get pods -o wide
           
       - name: wait-job
-        run: sleep 120s
+        run: sleep 30s
         shell: bash
 
       - name: Show Ingress URLs 
